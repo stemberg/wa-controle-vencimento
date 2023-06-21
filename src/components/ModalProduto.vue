@@ -32,10 +32,7 @@ function cadastrarProduto() {
   ProdutoAPI.postProduto(novoProduto).then(() => {
     loading.value = false;
     if (erro.value) {
-      return toast.abrirToast(
-        "error",
-        "Não foi possível cadastrar esse produto."
-      );
+      return toast.abrirToast("error", erro.value.response.data.title);
     }
     fecharModal(modal.value);
     toast.abrirToast("success", "Produto cadastrado com sucesso!");
@@ -59,6 +56,12 @@ function adicionarDataVencimento() {
   produto.value.datasVencimento.push("");
 }
 
+function removerDataVencimento() {
+  var index = produto.value.datasVencimento.indexOf("");
+  if (index > -1) {
+    produto.value.datasVencimento.splice(index, 1);
+  }
+}
 
 onMounted(() => {
   modal.value = document.querySelector("#modal-produto");
@@ -77,7 +80,7 @@ onMounted(() => {
         <form class="form">
           <div class="field">
             <div class="field-label is-normal">
-              <label class="label" style="text-align: left;">Nome</label>
+              <label class="label" style="text-align: left">Nome</label>
             </div>
             <div class="field-body">
               <div class="field">
@@ -89,29 +92,37 @@ onMounted(() => {
           </div>
           <div class="field" v-for="(data, index) in produto.datasVencimento" :key="index">
             <div class="field-label is-normal">
-              <label class="label" style="text-align: left;">Data de Vencimento {{ index + 1 }}</label>
+              <label class="label" style="text-align: left">Data de Vencimento {{ index + 1 }}</label>
             </div>
             <div class="field-body">
               <div class="field">
                 <div class="control">
-                  <input required v-mask="'##/##/####'" type="text" v-model="produto.datasVencimento[index]" class="input" />
+                  <input required v-mask="'##/##/####'" type="text" v-model="produto.datasVencimento[index]"
+                    class="input" />
                 </div>
               </div>
             </div>
           </div>
-          <button class="button" @click.prevent="adicionarDataVencimento()">Adicionar Data de Vencimento</button>
+          <div class="acoes">
+            <button class="button adicionar" @click.prevent="adicionarDataVencimento()">
+              Adicionar Data de Vencimento
+            </button>
+            <button class="button" v-if="produto.datasVencimento.length > 1" @click.prevent="removerDataVencimento()">
+              Remover Data de Vencimento
+            </button>
+          </div>
         </form>
       </section>
       <footer class="modal-card-foot is-flex">
-        <button v-if="!loading" class="button ml-auto" @click="confirmar()">{{ title }}</button>
+        <button v-if="!loading" class="button ml-auto" @click="confirmar()">
+          {{ title }}
+        </button>
         <button class="button is-primary is-loading" v-if="loading"></button>
         <button class="button" @click="fecharModal(modal)">Cancelar</button>
       </footer>
     </div>
   </div>
 </template>
-
-
 
 <style>
 .radio-group {
@@ -121,5 +132,9 @@ onMounted(() => {
 
 .radio {
   margin-top: 10px;
+}
+
+.adicionar {
+  margin-right: 1rem;
 }
 </style>

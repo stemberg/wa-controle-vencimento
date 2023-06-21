@@ -203,6 +203,7 @@ onMounted(() => {
 }
 
 .styled-table {
+  border: 1px solid #616060;
   border-collapse: collapse;
   font-size: 1rem;
   width: 100%;
