@@ -120,14 +120,14 @@ onMounted(() => {
 
               <td class="row-values">
                 <button
-                  class="button edit-button"
+                  class="button bota-acao edit-button"
                   @click="editarProduto(produto)"
                 >
                   Editar
                 </button>
               </td>
               <td class="row-values">
-                <button class="button delete-button" @click="excluirProduto()">
+                <button class="button botao-acao delete-button" @click="excluirProduto()">
                   Excluir
                 </button>
               </td>
@@ -170,7 +170,7 @@ onMounted(() => {
   align-items: center;
 }
 
-.button {
+.botao-acao {
   background-color: #4c4c4c;
   color: #ffff;
   border: none;
@@ -186,6 +186,14 @@ onMounted(() => {
 }
 
 .main-button {
+  background-color: #4c4c4c;
+  color: #ffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
   font-weight: bold;
   margin-right: 15px;
 }
